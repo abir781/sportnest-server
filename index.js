@@ -43,6 +43,8 @@ async function run() {
     const paymentsCollection = client.db('sportnest').collection('payments');
     const usersCollection = client.db('sportnest').collection('users');
     const couponsCollection = client.db('sportnest').collection('coupons');
+    const imagecollection= client.db("sportnest").collection('gallery');
+    const coachcollection = client.db('sportnest').collection('coaches');
     // Send a ping to confirm a successful connection
 
 
@@ -75,6 +77,16 @@ async function run() {
       const count=await courtscollection.estimatedDocumentCount();
       res.send({count});
     })
+
+    app.get("/mywishendpoint",async(req,res)=>{
+      const result=await coachcollection.find().toArray();
+      res.send(result);
+    })
+
+    app.get('/gallery',async(req,res)=>{
+  const result=await imagecollection.find().toArray();
+  res.send(result);
+})
 
     app.post('/courts', async (req, res) => {
   const court = req.body;
